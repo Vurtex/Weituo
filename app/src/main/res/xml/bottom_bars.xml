@@ -1,0 +1,18 @@
+<tabs>
+  <tab
+      id="@+id/tab_one"
+      icon="@mipmap/ic_launcher"
+      title="One" />
+  <tab
+      id="@+id/tab_two"
+      icon="@mipmap/ic_launcher"
+      title="Two" />
+  <tab
+      id="@+id/tab_three"
+      icon="@mipmap/ic_launcher"
+      title="Three" />
+  <tab
+    id="@+id/tab_four"
+    icon="@mipmap/ic_launcher"
+    title="Four" />
+</tabs>

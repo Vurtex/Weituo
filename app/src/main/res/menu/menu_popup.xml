@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_one"
+        android:icon="@mipmap/ic_add_white_36dp"
+        android:title="111111" />
+    <item
+        android:id="@+id/create_group"
+        android:icon="@mipmap/ic_add_white_36dp"
+        android:title="222222" />
+    <item
+        android:id="@+id/search_group"
+        android:icon="@mipmap/ic_add_white_36dp"
+        android:title="333333" />
+    <item
+        android:id="@+id/free_call"
+        android:icon="@mipmap/ic_add_white_36dp"
+        android:title="444444" />
+    <item
+        android:id="@+id/audio_meet"
+        android:icon="@mipmap/ic_add_white_36dp"
+        android:title="555555" />
+</menu>
