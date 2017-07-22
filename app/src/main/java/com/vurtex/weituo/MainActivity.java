@@ -32,6 +32,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import work.wanghao.simplehud.SimpleHUD;
 
+import static work.wanghao.simplehud.SimpleHUD.showErrorMessage;
+
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.tv_toolbar)
@@ -51,6 +53,9 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 //        ButterKnife.bind(this);
         init();
+        SimpleHUD.showErrorMessage(this, "", ()-> {
+
+        });
     }
 
     private void init() {
@@ -94,7 +99,7 @@ public class MainActivity extends BaseActivity {
                                 @Override
                                 public void onStart() {
                                     super.onStart();
-                                    SimpleHUD.showErrorMessage(MainActivity.this, "请稍后.");
+                                    showErrorMessage(MainActivity.this, "请稍后.");
                                 }
                             }
 
