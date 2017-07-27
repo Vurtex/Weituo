@@ -1,4 +1,4 @@
-package com.vurtex.weituo;
+package com.vurtex.weituo.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,11 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
-import com.vurtex.weituo.activity.BaseActivity;
+import com.vurtex.weituo.R;
+import com.vurtex.weituo.base.BaseActivity;
 import com.vurtex.weituo.common.HttpManager;
-import com.vurtex.weituo.entity.RetrofitEntity;
+import com.vurtex.weituo.entity.LoginResult;
 import com.vurtex.weituo.fragment.OneFragment;
-import com.vurtex.weituo.server.HttpService;
+import com.vurtex.weituo.server.HttpServiceApi;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +54,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 //        ButterKnife.bind(this);
         init();
-        SimpleHUD.showErrorMessage(this, "", ()-> {
+        SimpleHUD.showErrorMessage(this, "", () -> {
 
         });
     }
@@ -66,44 +67,42 @@ public class MainActivity extends BaseActivity {
     }
 
     private void updateCheck() {
-            //手动创建一个OkHttpClient并设置超时时间
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(5, TimeUnit.SECONDS);
-            Retrofit retrofit = new Retrofit.Builder()
-                    .client(builder.build())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    .baseUrl(HttpManager.BASE_URL)
-                    .build();
+        //手动创建一个OkHttpClient并设置超时时间
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(5, TimeUnit.SECONDS);
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(builder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(HttpManager.BASE_URL)
+                .build();
 
-            HttpService apiService = retrofit.create(HttpService.class);
-            Observable<RetrofitEntity> observable = apiService.getAllVedioBy(true);
-            observable.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            new Subscriber<RetrofitEntity>() {
-                                @Override
-                                public void onCompleted() {
-                                    SimpleHUD.dismiss();
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    SimpleHUD.dismiss();
-                                }
-
-                                @Override
-                                public void onNext(RetrofitEntity retrofitEntity) {
-//                                    tvMsg.setText("无封装：\n" + retrofitEntity.a.toString());
-                                }
-
-                                @Override
-                                public void onStart() {
-                                    super.onStart();
-                                    showErrorMessage(MainActivity.this, "请稍后.");
-                                }
+        HttpServiceApi apiService = retrofit.create(HttpServiceApi.class);
+        Observable<LoginResult> observable = apiService.dologin("", "");
+        observable.subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Subscriber<LoginResult>() {
+                            @Override
+                            public void onCompleted() {
+                                SimpleHUD.dismiss();
                             }
 
-                    );
+                            @Override
+                            public void onError(Throwable e) {
+                                SimpleHUD.dismiss();
+                            }
+
+                            @Override
+                            public void onNext(LoginResult loginResult) {
+//                                    tvMsg.setText("无封装：\n" + retrofitEntity.a.toString());
+                            }
+
+                            @Override
+                            public void onStart() {
+                                super.onStart();
+                                showErrorMessage(MainActivity.this, "请稍后.");
+                            }
+                        });
     }
 
     public void initToolbar() {
@@ -147,9 +146,12 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-    @OnClick(R.id.image) public void onClick(View v) {
+
+    @OnClick(R.id.image)
+    public void onClick(View v) {
         showPopupMenu();
     }
+
     public void showPopupMenu() {
         mPopupMenu = new PopupMenu(this, mImage);
         mPopupMenu.getMenuInflater().inflate(R.menu.menu_popup, mPopupMenu.getMenu());

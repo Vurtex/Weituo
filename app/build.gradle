@@ -27,6 +27,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
@@ -60,10 +64,13 @@ dependencies {
     compile 'com.trello:rxlifecycle:+'
     compile 'com.trello:rxlifecycle-components:+'
     /*rotrofit*/
+    compile 'com.squareup.retrofit2:adapter-rxjava:' + rootProject.ext.depsVersion.rxjavaadapter
+    compile 'com.squareup.retrofit2:converter-jackson:' + rootProject.ext.depsVersion.jacksonVersion
     compile 'com.squareup.retrofit2:retrofit:+'
     compile 'com.squareup.retrofit2:converter-gson:+'
     compile 'com.squareup.retrofit2:adapter-rxjava:+'
     compile 'com.google.code.gson:gson:+'
     /*日志相关*/
     compile 'com.orhanobut:logger:1.15'
+    compile 'com.squareup.okhttp3:logging-interceptor:' + rootProject.ext.depsVersion.logginginterceptorVersion
 }

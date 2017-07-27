@@ -1,5 +1,6 @@
-package com.vurtex.weituo.activity;
+package com.vurtex.weituo.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -20,9 +21,10 @@ public abstract class BaseActivity extends AppCompatActivity {
   @BindView(R.id.tv_toolbar) TextView mTvToolbar;
   @Nullable
   @BindView(R.id.toolbar) Toolbar mToolbar;
-
+  public Context mContext;
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    mContext=this;
   }
 
 
