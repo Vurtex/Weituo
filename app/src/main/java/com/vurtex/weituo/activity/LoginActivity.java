@@ -191,7 +191,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                 ResultInfo resultInfo = loginResult.getResultInfo();
                 if (resultInfo.getResultCode() == 1) {
                     PowerApp.user = loginResult.getUser();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    PowerApp.token = loginResult.getToken();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(LoginActivity.this, resultInfo.getResultMsg(), Toast.LENGTH_SHORT).show();
                 }

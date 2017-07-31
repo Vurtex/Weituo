@@ -11,6 +11,7 @@ public class LoginResult implements Parcelable {
     private ResultInfo resultInfo;
     private User user;
     private Token token;
+
     public ResultInfo getResultInfo() {
         return resultInfo;
     }
@@ -27,7 +28,12 @@ public class LoginResult implements Parcelable {
         this.user = user;
     }
 
-    public LoginResult() {
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 
     @Override
@@ -42,13 +48,16 @@ public class LoginResult implements Parcelable {
         dest.writeParcelable(this.token, flags);
     }
 
+    public LoginResult() {
+    }
+
     protected LoginResult(Parcel in) {
         this.resultInfo = in.readParcelable(ResultInfo.class.getClassLoader());
         this.user = in.readParcelable(User.class.getClassLoader());
         this.token = in.readParcelable(Token.class.getClassLoader());
     }
 
-    public static final Creator<LoginResult> CREATOR = new Creator<LoginResult>() {
+    public static final Parcelable.Creator<LoginResult> CREATOR = new Parcelable.Creator<LoginResult>() {
         @Override
         public LoginResult createFromParcel(Parcel source) {
             return new LoginResult(source);

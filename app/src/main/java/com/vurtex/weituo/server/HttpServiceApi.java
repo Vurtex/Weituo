@@ -14,7 +14,7 @@ import rx.Observable;
 
 public interface HttpServiceApi {
     @FormUrlEncoded
-    @POST("login/dologin")
+    @POST("user/doLogin")
     Observable<LoginResult> dologin(@Field("username") String username, @Field("password") String password);
     @FormUrlEncoded
     @POST("user/registerUser")

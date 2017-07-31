@@ -47,7 +47,8 @@ public class ApiService {
       synchronized (this) {
         if (sOkHttpClient == null) {
           OkHttpClient.Builder builder = new OkHttpClient.Builder();
-          builder.connectTimeout(10, TimeUnit.SECONDS);
+          //TODO 原先为10 7.31日 Vurtex修改
+          builder.connectTimeout(0, TimeUnit.SECONDS);
           builder.addInterceptor(new HttpLoggingInterceptor());
           /*for (Interceptor interceptor : interceptors) {
             builder.addInterceptor(interceptor);

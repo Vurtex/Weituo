@@ -207,13 +207,15 @@ public class RegisterActivity extends BaseActivity implements LoaderCallbacks<Cu
             // perform the user login attempt.
             //TODO 请求接口提交注册
             HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService(HttpServiceApi.class);
-            mHttpServiceApi.doregister(username, password,nickname,age,avatar).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
+            mHttpServiceApi.dologin(username, password).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
                     Schedulers.io()).subscribe((loginResult -> {
                 SimpleHUD.dismiss();
                 ResultInfo resultInfo = loginResult.getResultInfo();
                 if (resultInfo.getResultCode() == 1) {
                     PowerApp.user = loginResult.getUser();
-                    startActivity(new Intent(mContext, MainActivity.class));
+                    PowerApp.token = loginResult.getToken();
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(mContext, resultInfo.getResultMsg(), Toast.LENGTH_SHORT).show();
                 }
