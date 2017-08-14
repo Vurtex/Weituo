@@ -102,10 +102,6 @@ public class RegisterActivity extends BaseActivity implements LoaderCallbacks<Cu
 
     }
 
-    @Override
-    protected boolean preSetupToolbar() {
-        return false;
-    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {

@@ -47,30 +47,34 @@ dependencies {
     compile 'com.jakewharton:butterknife:' + rootProject.ext.depsVersion.butterknifeVersion
     /*--------------*/
     compile 'com.android.support:appcompat-v7:' + rootProject.ext.depsVersion.supportVersion
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
 
     compile 'xiaofei.library:hermes-eventbus:' + rootProject.ext.depsVersion.hermeseventbusVersion
     /**关于 Rxjava Retrofit  Okhttp的文章找下面的地址去看
      * http://blog.csdn.net/column/details/13297.html
      */
     /*rx-android-java*/
-    compile 'io.reactivex:rxjava:+'
     compile 'io.reactivex:rxandroid:' + rootProject.ext.depsVersion.rxAndroidVersion
     /*关于rxpermissions看http://blog.csdn.net/windboy2014/article/details/52502259*/
     compile 'com.tbruyelle.rxpermissions:rxpermissions:' + rootProject.ext.depsVersion.rxpermissionsVersion
-    compile 'com.squareup.retrofit:adapter-rxjava:+'
-    compile 'com.trello:rxlifecycle:+'
-    compile 'com.trello:rxlifecycle-components:+'
     /*rotrofit*/
     compile 'com.squareup.retrofit2:adapter-rxjava:' + rootProject.ext.depsVersion.rxjavaadapter
     compile 'com.squareup.retrofit2:converter-jackson:' + rootProject.ext.depsVersion.jacksonVersion
+    /*日志相关*/
+    compile 'com.squareup.okhttp3:logging-interceptor:' + rootProject.ext.depsVersion.logginginterceptorVersion
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'io.reactivex:rxjava:+'
+    compile 'com.squareup.retrofit:adapter-rxjava:+'
+    compile 'com.trello:rxlifecycle:+'
+    compile 'com.trello:rxlifecycle-components:+'
     compile 'com.squareup.retrofit2:retrofit:+'
     compile 'com.squareup.retrofit2:converter-gson:+'
     compile 'com.squareup.retrofit2:adapter-rxjava:+'
-    compile 'com.google.code.gson:gson:+'
-    /*日志相关*/
+    compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.orhanobut:logger:1.15'
-    compile 'com.squareup.okhttp3:logging-interceptor:' + rootProject.ext.depsVersion.logginginterceptorVersion
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile ('com.github.niorgai:StatusBarCompat:' + rootProject.ext.depsVersion.StatusBarCompat, {
+        exclude group: 'com.android.support'
+    })
 }

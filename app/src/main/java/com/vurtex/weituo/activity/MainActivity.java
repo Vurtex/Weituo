@@ -3,18 +3,13 @@ package com.vurtex.weituo.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.vurtex.weituo.R;
 import com.vurtex.weituo.base.BaseActivity;
 import com.vurtex.weituo.common.HttpManager;
 import com.vurtex.weituo.entity.LoginResult;
+import com.vurtex.weituo.fragment.FourFragment;
 import com.vurtex.weituo.fragment.OneFragment;
 import com.vurtex.weituo.server.HttpServiceApi;
 
@@ -22,7 +17,6 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -37,16 +31,10 @@ import static work.wanghao.simplehud.SimpleHUD.showErrorMessage;
 
 
 public class MainActivity extends BaseActivity {
-    @BindView(R.id.tv_toolbar)
-    TextView mTvToolbar;
-    @BindView(R.id.image)
-    ImageView mImage;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
     private ArrayList<Fragment> mFragments;
-    private PopupMenu mPopupMenu;
+//    private PopupMenu mPopupMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +48,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-        initToolbar();
         initFragments();
         tabListen();
         updateCheck();
@@ -105,20 +92,13 @@ public class MainActivity extends BaseActivity {
                         });
     }
 
-    public void initToolbar() {
-        mToolbar.setTitle("");
-        mImage.setVisibility(View.VISIBLE);
-        mTvToolbar.setText("委托");
-        setSupportActionBar(mToolbar);
-//        mImage.setOnClickListener(v -> );
-    }
-
     public void initFragments() {
         mFragments = new ArrayList<>();
         mFragments.add(OneFragment.newInstance(0));
         mFragments.add(OneFragment.newInstance(1));
         mFragments.add(OneFragment.newInstance(2));
-        mFragments.add(OneFragment.newInstance(3));
+        mFragments.add(FourFragment.newInstance(3));
+        mFragments.add(OneFragment.newInstance(4));
     }
 
     public void naviFragment(Fragment fragment) {
@@ -142,46 +122,12 @@ public class MainActivity extends BaseActivity {
                 case R.id.tab_four:
                     naviFragment(mFragments.get(3));
                     break;
+                case R.id.tab_five:
+                    naviFragment(mFragments.get(4));
+                    break;
 
             }
         });
     }
 
-    @OnClick(R.id.image)
-    public void onClick(View v) {
-        showPopupMenu();
-    }
-
-    public void showPopupMenu() {
-        mPopupMenu = new PopupMenu(this, mImage);
-        mPopupMenu.getMenuInflater().inflate(R.menu.menu_popup, mPopupMenu.getMenu());
-        mPopupMenu.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.menu_one:
-                    OneFragment fragment = (OneFragment) mFragments.get(0);
-                    fragment.addDateToList();
-                    Toast.makeText(MainActivity.this, "itemId" + item.getItemId(), Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.create_group:
-                    Toast.makeText(MainActivity.this, "itemId" + item.getItemId(), Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.search_group:
-                    Toast.makeText(MainActivity.this, "itemId" + item.getItemId(), Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.free_call:
-                    Toast.makeText(MainActivity.this, "itemId" + item.getItemId(), Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.audio_meet:
-                    Toast.makeText(MainActivity.this, "itemId" + item.getItemId(), Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            return false;
-        });
-        mPopupMenu.show();
-    }
-
-    @Override
-    protected boolean preSetupToolbar() {
-        return false;
-    }
 }

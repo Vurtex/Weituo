@@ -95,11 +95,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         }));
     }
 
-    @Override
-    protected boolean preSetupToolbar() {
-        return false;
-    }
-
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;

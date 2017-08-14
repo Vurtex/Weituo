@@ -19,7 +19,7 @@ ext {
                  leakcanaryAndroidVersion          : '1.5',
                  multidexVersion                   : '1.0.1',
                  simpleHudVersion                  : '0.1.2',
-                 bottombarVersion                  : '2.0.2',
+                 bottombarVersion                  : '2.3.1',
                  viewcollectionVersion             : 'V0.0.5',
                  pgyersdkVersion                   : '2.2',
                  materialDialogsVersion            : '0.9.4.1',
@@ -33,6 +33,7 @@ ext {
                  jacksonAnnotationsVersion         : '2.7.2',
                  photoViewVersion                  : '1.3.1',
                  emojiVersion                      : 'V0.0.1',
-                 libjingleVersion                  : '9127@aar'
+                 libjingleVersion                  : '9127@aar',
+                 StatusBarCompat                  : '2.1.4'
   ]
 }
