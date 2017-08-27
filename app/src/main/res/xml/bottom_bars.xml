@@ -3,7 +3,7 @@
       id="@+id/tab_one"
       icon="@mipmap/ic_recents"
       title="One"
-      barColorWhenSelected="@color/colorAccent"/>
+      barColorWhenSelected="#7777dd"/>
   <tab
       id="@+id/tab_two"
       icon="@mipmap/ic_favorites"

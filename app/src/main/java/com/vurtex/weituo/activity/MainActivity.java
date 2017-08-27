@@ -3,20 +3,24 @@ package com.vurtex.weituo.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import com.roughike.bottombar.BottomBar;
 import com.vurtex.weituo.R;
-import com.vurtex.weituo.base.BaseActivity;
 import com.vurtex.weituo.common.HttpManager;
 import com.vurtex.weituo.entity.LoginResult;
+import com.vurtex.weituo.fragment.FiveFragment;
 import com.vurtex.weituo.fragment.FourFragment;
 import com.vurtex.weituo.fragment.OneFragment;
+import com.vurtex.weituo.fragment.ThreeFragment;
+import com.vurtex.weituo.fragment.TwoFragment;
 import com.vurtex.weituo.server.HttpServiceApi;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -30,7 +34,7 @@ import work.wanghao.simplehud.SimpleHUD;
 import static work.wanghao.simplehud.SimpleHUD.showErrorMessage;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
     private ArrayList<Fragment> mFragments;
@@ -40,7 +44,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        ButterKnife.bind(this);
+        ButterKnife.bind(this);
         init();
         SimpleHUD.showErrorMessage(this, "", () -> {
 
@@ -95,10 +99,10 @@ public class MainActivity extends BaseActivity {
     public void initFragments() {
         mFragments = new ArrayList<>();
         mFragments.add(OneFragment.newInstance(0));
-        mFragments.add(OneFragment.newInstance(1));
-        mFragments.add(OneFragment.newInstance(2));
+        mFragments.add(TwoFragment.newInstance(1));
+        mFragments.add(ThreeFragment.newInstance(2));
         mFragments.add(FourFragment.newInstance(3));
-        mFragments.add(OneFragment.newInstance(4));
+        mFragments.add(FiveFragment.newInstance(4));
     }
 
     public void naviFragment(Fragment fragment) {

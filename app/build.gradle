@@ -31,6 +31,7 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
@@ -74,7 +75,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile ('com.github.niorgai:StatusBarCompat:' + rootProject.ext.depsVersion.StatusBarCompat, {
+    compile('com.github.niorgai:StatusBarCompat:' + rootProject.ext.depsVersion.StatusBarCompat, {
         exclude group: 'com.android.support'
     })
 }

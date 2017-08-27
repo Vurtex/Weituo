@@ -1,7 +1,5 @@
 package com.vurtex.weituo.base;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.LayoutRes;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -19,35 +16,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import butterknife.ButterKnife;
+/**
+ * Created by Vurtex on 2017/8/16.
+ */
 
-public abstract class BaseActivity extends AppCompatActivity {
-
-    public Context mContext;
-
+public class BaseFragment extends Fragment {
     public ImageView mImageView;
 
     private static final int CAMERA_CODE = 1;
     private static final int GALLERY_CODE = 2;
     private static final int CROP_CODE = 3;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = this;
-    }
-
-
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
-        ButterKnife.bind(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 
     /**
      * 拍照选择图片
@@ -72,19 +50,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        }
-        switch (requestCode) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
             case CAMERA_CODE:
                 //用户点击了取消
-                if (data == null) {
+                if(data == null){
                     return;
-                } else {
+                }else{
                     Bundle extras = data.getExtras();
-                    if (extras != null) {
+                    if (extras != null){
                         //获得拍的照片
                         Bitmap bm = extras.getParcelable("data");
                         //将Bitmap转化为uri
@@ -95,9 +69,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
                 break;
             case GALLERY_CODE:
-                if (data == null) {
+                if (data == null){
                     return;
-                } else {
+                }else{
                     //用户从图库选择图片后会返回所选图片的Uri
                     Uri uri;
                     //获取到用户所选图片的Uri
@@ -108,14 +82,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
                 break;
             case CROP_CODE:
-                if (data == null) {
+                if (data == null){
                     return;
-                } else {
+                }else{
                     Bundle extras = data.getExtras();
-                    if (extras != null) {
+                    if (extras != null){
                         //获取到裁剪后的图像
                         Bitmap bm = extras.getParcelable("data");
-                        if (null != mImageView)
+                        if(null!=mImageView)
                             mImageView.setImageBitmap(bm);
                     }
                 }
@@ -127,15 +101,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 将content类型的Uri转化为文件类型的Uri
-     *
      * @param uri
      * @return
      */
-    private Uri convertUri(Uri uri) {
+    private Uri convertUri(Uri uri){
         InputStream is;
         try {
             //Uri ----> InputStream
-            is = getContentResolver().openInputStream(uri);
+            is = getActivity().getContentResolver().openInputStream(uri);
             //InputStream ----> Bitmap
             Bitmap bm = BitmapFactory.decodeStream(is);
             //关闭流
@@ -152,7 +125,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 将Bitmap写入SD卡中的一个文件中,并返回写入文件的Uri
-     *
      * @param bm
      * @param dirPath
      * @return
@@ -160,7 +132,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Uri saveBitmap(Bitmap bm, String dirPath) {
         //新建文件夹用于存放裁剪后的图片
         File tmpDir = new File(Environment.getExternalStorageDirectory() + "/" + dirPath);
-        if (!tmpDir.exists()) {
+        if (!tmpDir.exists()){
             tmpDir.mkdir();
         }
 
@@ -189,10 +161,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 通过Uri传递图像信息以供裁剪
-     *
      * @param uri
      */
-    private void startImageZoom(Uri uri) {
+    private void startImageZoom(Uri uri){
         //构建隐式Intent来启动裁剪程序
         Intent intent = new Intent("com.android.camera.action.CROP");
         //设置数据uri和类型为图片类型

@@ -1,20 +1,23 @@
 package com.vurtex.weituo.fragment;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.vurtex.weituo.R;
+import com.vurtex.weituo.base.BaseFragment;
 import com.vurtex.weituo.entity.OneListModel;
 
 import java.util.ArrayList;
@@ -25,16 +28,20 @@ import butterknife.Unbinder;
 import qiu.niorgai.StatusBarCompat;
 
 
-public class FourFragment extends Fragment {
+public class FourFragment extends BaseFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     @BindView(R.id.list)
     ListView list;
+    @BindView(R.id.img_canvas)
+    ImageView imgCanvas;
+    @BindView(R.id.img_avatar)
+    ImageView imgAvatar;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     Unbinder unbinder;
-    public ArrayList<OneListModel> arr=new ArrayList<>();
+    public ArrayList<OneListModel> arr = new ArrayList<>();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -80,6 +87,18 @@ public class FourFragment extends Fragment {
         // Set the adapter
         setUpAdapter();
 
+        imgAvatar.setOnClickListener((v)-> {
+            String[] strs = {"从相册选择", "拍照"};
+            new AlertDialog.Builder(getActivity()).setItems(strs, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (which == 0)
+                        chooseFromGallery();
+                    else
+                        chooseFromCamera();
+                }
+            }).show();
+        });
 //        SimpleHUD.showLoadingMessage(LoginActivity.this, "正在登录...", true);
 //        //TODO 去登录
 //        HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService(HttpServiceApi.class);
@@ -103,6 +122,7 @@ public class FourFragment extends Fragment {
 //            }
 //        });
     }
+
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -110,8 +130,9 @@ public class FourFragment extends Fragment {
             StatusBarCompat.setStatusBarColorForCollapsingToolbar(getActivity(), mAppBarLayout, mCollapsingToolbarLayout, mToolbar, Color.TRANSPARENT);
         }
     }
+
     private void setUpAdapter() {
-        String[] array = { "设置", "wlan", "移动网络", "声音","显示","存储","电池","设置", "wlan", "移动网络", "声音","显示","存储","电池","设置", "wlan", "移动网络", "声音","显示","存储","电池","引用程序" };
-        list.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_expandable_list_item_1,array));
+        String[] array = {"设置", "wlan", "移动网络", "声音", "显示", "存储", "电池", "设置", "wlan", "移动网络", "声音", "显示", "存储", "电池", "设置", "wlan", "移动网络", "声音", "显示", "存储", "电池", "引用程序"};
+        list.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, array));
     }
 }
