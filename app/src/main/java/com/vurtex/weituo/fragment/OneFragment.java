@@ -1,12 +1,14 @@
 package com.vurtex.weituo.fragment;
 
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.unstoppable.submitbuttonview.SubmitButton;
 import com.vurtex.weituo.R;
 import com.vurtex.weituo.base.BaseFragment;
 
@@ -22,9 +24,11 @@ public class OneFragment extends BaseFragment {
     Unbinder unbinder;
     @BindView(R.id.textView)
     TextView tv_welcome;
+    @BindView(R.id.btn_help)
+    SubmitButton btn_Help;
     // TODO: Customize parameters
     private int mColumnCount = 1;
-
+    private MyTask task;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -57,10 +61,47 @@ public class OneFragment extends BaseFragment {
         // 设置浪漫雅圆字体 字体格式要为ttf
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvantGardeLT.ttf");
         tv_welcome.setTypeface(typeface);
-
+        btn_Help.setOnClickListener(v->{
+            if (task == null || task.isCancelled()) {
+                task = new MyTask();
+                task.execute();
+            }
+        });
         return view;
     }
+    private class MyTask extends AsyncTask<Void, Integer, Boolean> {
 
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            int i = 0;
+            while (i <= 100) {
+                if (isCancelled()) {
+                    return null;
+                }
+                try {
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                i++;
+                publishProgress(i);
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean == null) {
+                btn_Help.reset();
+            }
+            btn_Help.doResult(aBoolean);
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            btn_Help.setProgress(values[0]);
+        }
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
