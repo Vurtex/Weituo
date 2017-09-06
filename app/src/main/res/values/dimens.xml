@@ -6,6 +6,7 @@
     <dimen name="divider_normal_height">16dp</dimen>
     <dimen name="divider">0.2dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="status_bar_height">0dp</dimen>
     <!--<dimen name="toolBarPaddingTop">0dp</dimen>-->
     <!--<dimen name="toolBarHeight">50dp</dimen>-->
 </resources>

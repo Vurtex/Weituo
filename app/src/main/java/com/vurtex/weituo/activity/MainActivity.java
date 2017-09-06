@@ -38,7 +38,15 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
     private ArrayList<Fragment> mFragments;
-//    private PopupMenu mPopupMenu;
+
+    //    private PopupMenu mPopupMenu;
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //保存BottomBar的状态
+        mBottomBar.onSaveInstanceState();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
-        SimpleHUD.showErrorMessage(this, "", () -> {
-
-        });
+//        SimpleHUD.showErrorMessage(this, "", () -> {
+//
+//        });
     }
 
     private void init() {

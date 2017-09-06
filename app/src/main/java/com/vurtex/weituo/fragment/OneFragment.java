@@ -3,7 +3,11 @@ package com.vurtex.weituo.fragment;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -26,9 +30,12 @@ public class OneFragment extends BaseFragment {
     TextView tv_welcome;
     @BindView(R.id.btn_help)
     SubmitButton btn_Help;
+    @BindView(R.id.tb_one)
+    Toolbar mToolbar;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private MyTask task;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -58,10 +65,14 @@ public class OneFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_one, container, false);
         unbinder = ButterKnife.bind(this, view);
+        //Toolbar相关------------------
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
+        //----------------------------
         // 设置浪漫雅圆字体 字体格式要为ttf
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/AvantGardeLT.ttf");
         tv_welcome.setTypeface(typeface);
-        btn_Help.setOnClickListener(v->{
+        btn_Help.setOnClickListener(v -> {
             if (task == null || task.isCancelled()) {
                 task = new MyTask();
                 task.execute();
@@ -69,6 +80,14 @@ public class OneFragment extends BaseFragment {
         });
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.menu_one, menu);
+    }
+
     private class MyTask extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
@@ -102,6 +121,7 @@ public class OneFragment extends BaseFragment {
             btn_Help.setProgress(values[0]);
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

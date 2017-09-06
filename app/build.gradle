@@ -76,8 +76,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.orhanobut:logger:1.15'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile('com.github.niorgai:StatusBarCompat:' + rootProject.ext.depsVersion.StatusBarCompat, {
-        exclude group: 'com.android.support'
-    })
     compile 'com.unstoppable:submitbutton:1.1.2'
+    compile 'com.gyf.barlibrary:barlibrary:2.2.9'
 }

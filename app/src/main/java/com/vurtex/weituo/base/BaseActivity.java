@@ -11,7 +11,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 import android.widget.ImageView;
+
+import com.vurtex.weituo.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        Window window = getWindow();
+        window.setStatusBarColor(getResources().getColor(R.color.colorBackground));
     }
 
 
