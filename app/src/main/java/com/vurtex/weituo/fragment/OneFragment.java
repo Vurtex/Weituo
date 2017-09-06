@@ -3,25 +3,24 @@ package com.vurtex.weituo.fragment;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.unstoppable.submitbuttonview.SubmitButton;
 import com.vurtex.weituo.R;
-import com.vurtex.weituo.base.BaseFragment;
+import com.vurtex.weituo.base.ImmersionBaseFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class OneFragment extends BaseFragment {
+public class OneFragment extends ImmersionBaseFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -36,13 +35,6 @@ public class OneFragment extends BaseFragment {
     private int mColumnCount = 1;
     private MyTask task;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public OneFragment() {
-    }
-
     // TODO: Customize parameter initialization
     public static OneFragment newInstance(int columnCount) {
         OneFragment fragment = new OneFragment();
@@ -53,18 +45,13 @@ public class OneFragment extends BaseFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_one, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    protected void initView() {
         //Toolbar相关------------------
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         setHasOptionsMenu(true);
@@ -78,7 +65,11 @@ public class OneFragment extends BaseFragment {
                 task.execute();
             }
         });
-        return view;
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.fragment_one;
     }
 
     @Override
@@ -120,12 +111,6 @@ public class OneFragment extends BaseFragment {
         protected void onProgressUpdate(Integer... values) {
             btn_Help.setProgress(values[0]);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
 }

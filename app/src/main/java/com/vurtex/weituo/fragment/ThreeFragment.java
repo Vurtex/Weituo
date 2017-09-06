@@ -4,17 +4,19 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.vurtex.weituo.R;
 import com.vurtex.weituo.adapter.OneListAdapter;
+import com.vurtex.weituo.base.ImmersionBaseFragment;
 import com.vurtex.weituo.entity.OneListModel;
 import com.vurtex.weituo.utils.RecyclerViewUtils;
 import com.vurtex.weituo.viewholder.EasyViewHolder;
@@ -22,11 +24,9 @@ import com.vurtex.weituo.viewholder.EasyViewHolder;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
-public class ThreeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+public class ThreeFragment extends ImmersionBaseFragment implements SwipeRefreshLayout.OnRefreshListener,
         EasyViewHolder.OnItemClickListener {
 
     // TODO: Customize parameter argument names
@@ -35,12 +35,13 @@ public class ThreeFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     RecyclerView list;
     @BindView(R.id.swift_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    Unbinder unbinder;
+    @BindView(R.id.tb_three)
+    Toolbar mToolbar;
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OneListAdapter mOneListAdapter;
 
-    public ArrayList<OneListModel> arr=new ArrayList<>();
+    public ArrayList<OneListModel> arr = new ArrayList<>();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,15 +68,25 @@ public class ThreeFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_three, container, false);
-        unbinder = ButterKnife.bind(this, view);
+    protected int setLayoutId() {
+        return R.layout.fragment_three;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+    }
+
+    @Override
+    protected void initView() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
         setRefresh();
         // Set the adapter
         setUpAdapter();
-        return view;
     }
+
     private void setRefresh() {
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
@@ -85,9 +96,10 @@ public class ThreeFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mSwipeRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
+
     private void setUpAdapter() {
         arr.addAll(getOneListModels());
-        mOneListAdapter = new OneListAdapter(getActivity(),arr);
+        mOneListAdapter = new OneListAdapter(getActivity(), arr);
         mOneListAdapter.setOnClickListener(this);
         list.setHasFixedSize(true);
         list.addItemDecoration(RecyclerViewUtils.buildItemDecoration(getActivity()));
@@ -98,19 +110,13 @@ public class ThreeFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @NonNull
     private ArrayList<OneListModel> getOneListModels() {
-        ArrayList<OneListModel> arr =new ArrayList<>();
+        ArrayList<OneListModel> arr = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             OneListModel model = new OneListModel();
-            model.Name="item"+i;
+            model.Name = "item" + i;
             arr.add(model);
         }
         return arr;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override
@@ -120,7 +126,7 @@ public class ThreeFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     @Override
     public void onItemClick(int position, View view) {
-        Toast.makeText(getActivity(),""+position,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
     }
 
     public void addDateToList() {

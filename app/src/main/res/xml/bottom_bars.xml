@@ -3,25 +3,27 @@
       id="@+id/tab_one"
       icon="@mipmap/ic_recents"
       title="One"
-      barColorWhenSelected="#7777dd"/>
+      />
+  <!--barColorWhenSelected="#319bd2"-->
   <tab
       id="@+id/tab_two"
       icon="@mipmap/ic_favorites"
-      title="Two"
-      barColorWhenSelected="#5D4037"/>
+      title="Two"/>
+  <!--barColorWhenSelected="#5D4037"-->
   <tab
       id="@+id/tab_three"
       icon="@mipmap/ic_nearby"
       title="Three"
-      barColorWhenSelected="#7B1FA2"/>
+      />
+  <!--barColorWhenSelected="#7B1FA2"-->
   <tab
     id="@+id/tab_four"
     icon="@mipmap/ic_friends"
-    title="Four"
-      barColorWhenSelected="#FF5252"/>
+    title="Four"/>
+  <!--barColorWhenSelected="#FF5252"-->
   <tab
       id="@+id/tab_five"
       icon="@mipmap/ic_restaurants"
-      title="Five"
-      barColorWhenSelected="#FF9800" />
+      title="Five" />
+  <!--barColorWhenSelected="#FF9800"-->
 </tabs>

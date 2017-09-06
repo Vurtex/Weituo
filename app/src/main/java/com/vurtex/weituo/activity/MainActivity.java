@@ -3,10 +3,15 @@ package com.vurtex.weituo.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.vurtex.weituo.R;
+import com.vurtex.weituo.base.ImmersionBaseActivity;
 import com.vurtex.weituo.common.HttpManager;
 import com.vurtex.weituo.entity.LoginResult;
 import com.vurtex.weituo.fragment.FiveFragment;
@@ -34,9 +39,15 @@ import work.wanghao.simplehud.SimpleHUD;
 import static work.wanghao.simplehud.SimpleHUD.showErrorMessage;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ImmersionBaseActivity {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
+    @BindView(R.id.tv_toolbar)
+    TextView tv_top_title;
+    @BindView(R.id.image)
+    ImageView img_top_btn;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     private ArrayList<Fragment> mFragments;
 
     //    private PopupMenu mPopupMenu;
@@ -49,17 +60,26 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        init();
-//        SimpleHUD.showErrorMessage(this, "", () -> {
-//
-//        });
+    protected int setLayoutId() {
+        return R.layout.activity_main;
     }
 
-    private void init() {
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.titleBar(mToolbar)
+                .navigationBarColor(R.color.colorBackground)
+                .init();
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        tv_top_title.setText("Employ");
+        img_top_btn.setVisibility(View.VISIBLE);
+        img_top_btn.setOnClickListener(v->{
+            Toast.makeText(this, "~~", Toast.LENGTH_SHORT).show();
+        });
         initFragments();
         tabListen();
         updateCheck();
@@ -142,4 +162,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

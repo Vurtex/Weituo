@@ -6,25 +6,23 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.vurtex.weituo.R;
-import com.vurtex.weituo.base.BaseFragment;
+import com.vurtex.weituo.base.ImmersionBaseFragment;
 import com.vurtex.weituo.entity.OneListModel;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class FourFragment extends BaseFragment {
+public class FourFragment extends ImmersionBaseFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -56,21 +54,20 @@ public class FourFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_four, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    protected int setLayoutId() {
+        return R.layout.fragment_four;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setHasOptionsMenu(true);
+        ImmersionBar.setTitleBar(getActivity(), mToolbar);
+    }
 
+    @Override
+    protected void initView() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setHasOptionsMenu(true);
         // Set the adapter
         setUpAdapter();
 
@@ -79,10 +76,10 @@ public class FourFragment extends BaseFragment {
             new AlertDialog.Builder(getActivity()).setItems(strs, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (which == 0)
-                        chooseFromGallery();
-                    else
-                        chooseFromCamera();
+//                    if (which == 0)
+//                        chooseFromGallery();
+//                    else
+//                        chooseFromCamera();
                 }
             }).show();
         });
