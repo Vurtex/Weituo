@@ -1,5 +1,6 @@
 package com.vurtex.weituo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -7,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.vurtex.weituo.R;
@@ -78,7 +78,8 @@ public class MainActivity extends ImmersionBaseActivity {
         tv_top_title.setText("Employ");
         img_top_btn.setVisibility(View.VISIBLE);
         img_top_btn.setOnClickListener(v->{
-            Toast.makeText(this, "~~", Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(this,SettingActivity.class);
+            startActivity(intent);
         });
         initFragments();
         tabListen();

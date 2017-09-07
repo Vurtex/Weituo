@@ -9,12 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 import android.widget.ImageView;
 
-import com.vurtex.weituo.R;
+import com.gyf.barlibrary.ImmersionBar;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,11 +21,13 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Context mContext;
-
+    protected ImmersionBar mImmersionBar;
+    private Unbinder unbinder;
     public ImageView mImageView;
 
     private static final int CAMERA_CODE = 1;
@@ -38,15 +38,52 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        Window window = getWindow();
-        window.setStatusBarColor(getResources().getColor(R.color.colorBackground));
+        setContentView(setLayoutId());
+        //绑定控件
+        unbinder = ButterKnife.bind(this);
+        //初始化沉浸式
+        if (isImmersionBarEnabled())
+            initImmersionBar();
+        //初始化数据
+        initData();
+        //view与数据绑定
+        initView();
+        //设置监听
+        setListener();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();  //在BaseActivity里销毁
     }
 
+    protected abstract int setLayoutId();
 
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
-        ButterKnife.bind(this);
+    protected void initImmersionBar() {
+        //在BaseActivity里初始化
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.init();
+    }
+
+    protected void initData() {
+    }
+
+    protected void initView() {
+    }
+
+    protected void setListener() {
+    }
+
+    /**
+     * 是否可以使用沉浸式
+     * Is immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    protected boolean isImmersionBarEnabled() {
+        return true;
     }
 
     @Override

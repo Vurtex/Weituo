@@ -1,5 +1,10 @@
 package com.vurtex.weituo.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
@@ -13,28 +18,33 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vurtex.weituo.R;
-import com.vurtex.weituo.base.BaseActivity;
+import com.vurtex.weituo.base.ImmersionBaseActivity;
 import com.vurtex.weituo.base.PowerApp;
 import com.vurtex.weituo.entity.ResultInfo;
 import com.vurtex.weituo.server.ApiService;
 import com.vurtex.weituo.server.HttpServiceApi;
 import com.vurtex.weituo.utils.ErrorAction;
+import com.vurtex.weituo.utils.JellyInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import work.wanghao.simplehud.SimpleHUD;
@@ -44,7 +54,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends ImmersionBaseActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -58,26 +68,50 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
+
+    @BindView(R.id.tv_toolbar)
+    TextView tv_top_title;
+    @BindView(R.id.image)
+    ImageView img_top_btn;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     @BindView(R.id.et_username)
     AutoCompleteTextView et_Username;
     @BindView(R.id.et_password)
     EditText et_Password;
     @BindView(R.id.btn_submit)
-    Button btn_Submit;
+    TextView btn_Submit;
     @BindView(R.id.btn_register)
-    Button btn_Register;
-
+    TextView btn_Register;
+    @BindView(R.id.input_layout)
+    View mInputLayout;
+    @BindView(R.id.layout_progress)
+    View progress;
+    @BindView(R.id.input_layout_name)
+    LinearLayout mName;
+    @BindView(R.id.input_layout_psw)
+    LinearLayout mPsw;
+    private float mWidth, mHeight;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+    protected int setLayoutId() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.titleBar(mToolbar)
+                .navigationBarColor(R.color.colorBackground)
+                .init();
+    }
+
+    @Override
+    protected void initView() {
         // Set up the login form.
-        et_Username = (AutoCompleteTextView) findViewById(R.id.et_username);
         populateAutoComplete();
 
-        et_Password = (EditText) findViewById(R.id.et_password);
         et_Password.setOnEditorActionListener((textView, id, keyEvent) -> {
                     if (id == R.id.login || id == EditorInfo.IME_NULL) {
                         attemptLogin();
@@ -177,7 +211,13 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         if (cancel) {
             focusView.requestFocus();
         } else {
-            SimpleHUD.showLoadingMessage(LoginActivity.this, "正在登录...", true);
+            mWidth = btn_Submit.getMeasuredWidth();
+            mHeight = btn_Submit.getMeasuredHeight();
+
+            mInputLayout.setVisibility(View.INVISIBLE);
+
+            inputAnimator(mInputLayout, mWidth, mHeight);
+//            SimpleHUD.showLoadingMessage(LoginActivity.this, "正在登录...", true);
             //TODO 去登录
             HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService(HttpServiceApi.class);
             mHttpServiceApi.dologin(username, password).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
@@ -190,11 +230,15 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
+                    progress.setVisibility(View.INVISIBLE);
+                    mInputLayout.setVisibility(View.VISIBLE);
                     Toast.makeText(LoginActivity.this, resultInfo.getResultMsg(), Toast.LENGTH_SHORT).show();
                 }
             }), new ErrorAction() {
                 @Override
                 public void call(Throwable throwable) {
+                    progress.setVisibility(View.INVISIBLE);
+                    mInputLayout.setVisibility(View.VISIBLE);
                     super.call(throwable);
                     SimpleHUD.showErrorMessage(LoginActivity.this, "" + throwable.getMessage());
                 }
@@ -256,6 +300,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     }
 
 
+
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -266,5 +311,73 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         int IS_PRIMARY = 1;
     }
 
+
+    private void inputAnimator(final View view, float w, float h) {
+
+        AnimatorSet set = new AnimatorSet();
+
+        ValueAnimator animator = ValueAnimator.ofFloat(0, w);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view
+                        .getLayoutParams();
+                params.leftMargin = (int) value;
+                params.rightMargin = (int) value;
+                view.setLayoutParams(params);
+            }
+        });
+
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout,
+                "scaleX", 1f, 0.5f);
+        set.setDuration(1000);
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.playTogether(animator, animator2);
+        set.start();
+        set.addListener(new Animator.AnimatorListener() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+                progress.setVisibility(View.VISIBLE);
+                progressAnimator(progress);
+                mInputLayout.setVisibility(View.INVISIBLE);
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+
+    }
+
+    private void progressAnimator(final View view) {
+        PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX",
+                0.5f, 1f);
+        PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY",
+                0.5f, 1f);
+        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(view,
+                animator, animator2);
+        animator3.setDuration(1000);
+        animator3.setInterpolator(new JellyInterpolator());
+        animator3.start();
+
+    }
 }
 

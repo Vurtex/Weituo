@@ -13,8 +13,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -22,11 +22,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vurtex.weituo.R;
-import com.vurtex.weituo.base.BaseActivity;
+import com.vurtex.weituo.base.ImmersionBaseActivity;
 import com.vurtex.weituo.base.PowerApp;
 import com.vurtex.weituo.entity.ResultInfo;
 import com.vurtex.weituo.server.ApiService;
@@ -37,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import work.wanghao.simplehud.SimpleHUD;
@@ -47,7 +47,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class RegisterActivity extends BaseActivity implements LoaderCallbacks<Cursor> {
+public class RegisterActivity extends ImmersionBaseActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -61,6 +61,14 @@ public class RegisterActivity extends BaseActivity implements LoaderCallbacks<Cu
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
+
+    @BindView(R.id.tv_toolbar)
+    TextView tv_top_title;
+    @BindView(R.id.image)
+    ImageView img_top_btn;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     @BindView(R.id.et_username)
     AutoCompleteTextView et_Username;
     @BindView(R.id.et_password)
@@ -75,33 +83,31 @@ public class RegisterActivity extends BaseActivity implements LoaderCallbacks<Cu
     EditText et_Age;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        ButterKnife.bind(this);
-        // Set up the login form.
+    protected int setLayoutId() {
+        return R.layout.activity_register;
+    }
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.titleBar(mToolbar)
+                .navigationBarColor(R.color.colorBackground)
+                .init();
+    }
+    @Override
+    protected void initView() {
         populateAutoComplete();
-
-        et_Password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+        et_Password.setOnEditorActionListener((textView, id,  keyEvent)-> {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
                     attemptRegister();
                     return true;
                 }
                 return false;
-            }
         });
 
-        btn_Submit.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_Submit.setOnClickListener((view)-> {
                 attemptRegister();
-            }
         });
-
     }
-
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -176,7 +182,7 @@ public class RegisterActivity extends BaseActivity implements LoaderCallbacks<Cu
             focusView = et_Password;
             cancel = true;
         }
-        if(!password.equals(confirm)){
+        if (!password.equals(confirm)) {
             et_Password.setError(getString(R.string.error_unlike_password));
             et_Confirm.setError(getString(R.string.error_unlike_password));
             focusView = et_Password;

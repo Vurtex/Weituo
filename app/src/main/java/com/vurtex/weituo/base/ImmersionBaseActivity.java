@@ -1,5 +1,6 @@
 package com.vurtex.weituo.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,11 +19,12 @@ public abstract class ImmersionBaseActivity extends AppCompatActivity {
 
     protected ImmersionBar mImmersionBar;
     private Unbinder unbinder;
-
+    public Context mContext;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setLayoutId());
+        mContext = this;
         //绑定控件
         unbinder = ButterKnife.bind(this);
         //初始化沉浸式
