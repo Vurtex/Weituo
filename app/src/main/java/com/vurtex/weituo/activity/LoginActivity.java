@@ -1,10 +1,5 @@
 package com.vurtex.weituo.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
-import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
@@ -21,14 +16,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +31,6 @@ import com.vurtex.weituo.entity.ResultInfo;
 import com.vurtex.weituo.server.ApiService;
 import com.vurtex.weituo.server.HttpServiceApi;
 import com.vurtex.weituo.utils.ErrorAction;
-import com.vurtex.weituo.utils.JellyInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,15 +75,6 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
     TextView btn_Submit;
     @BindView(R.id.btn_register)
     TextView btn_Register;
-    @BindView(R.id.input_layout)
-    View mInputLayout;
-    @BindView(R.id.layout_progress)
-    View progress;
-    @BindView(R.id.input_layout_name)
-    LinearLayout mName;
-    @BindView(R.id.input_layout_psw)
-    LinearLayout mPsw;
-    private float mWidth, mHeight;
 
     @Override
     protected int setLayoutId() {
@@ -111,7 +93,7 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
     protected void initView() {
         // Set up the login form.
         populateAutoComplete();
-
+        tv_top_title.setText("Employ");
         et_Password.setOnEditorActionListener((textView, id, keyEvent) -> {
                     if (id == R.id.login || id == EditorInfo.IME_NULL) {
                         attemptLogin();
@@ -211,13 +193,7 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
         if (cancel) {
             focusView.requestFocus();
         } else {
-            mWidth = btn_Submit.getMeasuredWidth();
-            mHeight = btn_Submit.getMeasuredHeight();
-
-            mInputLayout.setVisibility(View.INVISIBLE);
-
-            inputAnimator(mInputLayout, mWidth, mHeight);
-//            SimpleHUD.showLoadingMessage(LoginActivity.this, "正在登录...", true);
+            SimpleHUD.showLoadingMessage(LoginActivity.this, "正在登录...", true);
             //TODO 去登录
             HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService(HttpServiceApi.class);
             mHttpServiceApi.dologin(username, password).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
@@ -230,15 +206,11 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    progress.setVisibility(View.INVISIBLE);
-                    mInputLayout.setVisibility(View.VISIBLE);
                     Toast.makeText(LoginActivity.this, resultInfo.getResultMsg(), Toast.LENGTH_SHORT).show();
                 }
             }), new ErrorAction() {
                 @Override
                 public void call(Throwable throwable) {
-                    progress.setVisibility(View.INVISIBLE);
-                    mInputLayout.setVisibility(View.VISIBLE);
                     super.call(throwable);
                     SimpleHUD.showErrorMessage(LoginActivity.this, "" + throwable.getMessage());
                 }
@@ -309,75 +281,6 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
 
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
-    }
-
-
-    private void inputAnimator(final View view, float w, float h) {
-
-        AnimatorSet set = new AnimatorSet();
-
-        ValueAnimator animator = ValueAnimator.ofFloat(0, w);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float value = (Float) animation.getAnimatedValue();
-                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view
-                        .getLayoutParams();
-                params.leftMargin = (int) value;
-                params.rightMargin = (int) value;
-                view.setLayoutParams(params);
-            }
-        });
-
-        ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout,
-                "scaleX", 1f, 0.5f);
-        set.setDuration(1000);
-        set.setInterpolator(new AccelerateDecelerateInterpolator());
-        set.playTogether(animator, animator2);
-        set.start();
-        set.addListener(new Animator.AnimatorListener() {
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-                progress.setVisibility(View.VISIBLE);
-                progressAnimator(progress);
-                mInputLayout.setVisibility(View.INVISIBLE);
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-
-    }
-
-    private void progressAnimator(final View view) {
-        PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX",
-                0.5f, 1f);
-        PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY",
-                0.5f, 1f);
-        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(view,
-                animator, animator2);
-        animator3.setDuration(1000);
-        animator3.setInterpolator(new JellyInterpolator());
-        animator3.start();
-
     }
 }
 
