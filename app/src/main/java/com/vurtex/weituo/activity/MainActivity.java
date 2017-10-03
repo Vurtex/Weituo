@@ -58,7 +58,13 @@ public class MainActivity extends ImmersionBaseActivity {
         mBottomBar.onSaveInstanceState();
     }
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+    
     @Override
     protected int setLayoutId() {
         return R.layout.activity_main;
@@ -134,12 +140,6 @@ public class MainActivity extends ImmersionBaseActivity {
         mFragments.add(FiveFragment.newInstance(4));
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     public void naviFragment(Fragment fragment) {
         FragmentTransaction mTransaction = getSupportFragmentManager().beginTransaction();
