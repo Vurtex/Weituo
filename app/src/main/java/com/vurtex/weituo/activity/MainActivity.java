@@ -77,8 +77,8 @@ public class MainActivity extends ImmersionBaseActivity {
         super.initView();
         tv_top_title.setText("Employ");
         img_top_btn.setVisibility(View.VISIBLE);
-        img_top_btn.setOnClickListener(v->{
-            Intent intent=new Intent(this,SettingActivity.class);
+        img_top_btn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SettingActivity.class);
             startActivity(intent);
         });
         initFragments();
@@ -134,6 +134,13 @@ public class MainActivity extends ImmersionBaseActivity {
         mFragments.add(FiveFragment.newInstance(4));
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
     public void naviFragment(Fragment fragment) {
         FragmentTransaction mTransaction = getSupportFragmentManager().beginTransaction();
         mTransaction.replace(R.id.contentContainer, fragment);
@@ -163,10 +170,4 @@ public class MainActivity extends ImmersionBaseActivity {
         });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }
