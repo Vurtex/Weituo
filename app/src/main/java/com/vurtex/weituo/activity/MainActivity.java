@@ -64,7 +64,16 @@ public class MainActivity extends ImmersionBaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
-    
+
+    public void initFragments() {
+        mFragments = new ArrayList<>();
+        mFragments.add(OneFragment.newInstance(0));
+        mFragments.add(TwoFragment.newInstance(1));
+        mFragments.add(ThreeFragment.newInstance(2));
+        mFragments.add(FourFragment.newInstance(3));
+        mFragments.add(FiveFragment.newInstance(4));
+    }
+
     @Override
     protected int setLayoutId() {
         return R.layout.activity_main;
@@ -131,14 +140,6 @@ public class MainActivity extends ImmersionBaseActivity {
                         });
     }
 
-    public void initFragments() {
-        mFragments = new ArrayList<>();
-        mFragments.add(OneFragment.newInstance(0));
-        mFragments.add(TwoFragment.newInstance(1));
-        mFragments.add(ThreeFragment.newInstance(2));
-        mFragments.add(FourFragment.newInstance(3));
-        mFragments.add(FiveFragment.newInstance(4));
-    }
 
 
     public void naviFragment(Fragment fragment) {
