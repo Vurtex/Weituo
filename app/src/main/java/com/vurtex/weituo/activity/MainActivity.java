@@ -74,10 +74,7 @@ public class MainActivity extends ImmersionBaseActivity {
         mFragments.add(FiveFragment.newInstance(4));
     }
 
-    @Override
-    protected int setLayoutId() {
-        return R.layout.activity_main;
-    }
+
 
     @Override
     protected void initImmersionBar() {
@@ -85,6 +82,11 @@ public class MainActivity extends ImmersionBaseActivity {
         mImmersionBar.titleBar(mToolbar)
                 .navigationBarColor(R.color.colorBackground)
                 .init();
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_main;
     }
 
     @Override
