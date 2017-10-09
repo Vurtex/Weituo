@@ -75,7 +75,6 @@ public class MainActivity extends ImmersionBaseActivity {
     }
 
 
-
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
@@ -84,10 +83,6 @@ public class MainActivity extends ImmersionBaseActivity {
                 .init();
     }
 
-    @Override
-    protected int setLayoutId() {
-        return R.layout.activity_main;
-    }
 
     @Override
     protected void initView() {
@@ -101,6 +96,11 @@ public class MainActivity extends ImmersionBaseActivity {
         initFragments();
         tabListen();
         updateCheck();
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_main;
     }
 
     private void updateCheck() {
@@ -141,7 +141,6 @@ public class MainActivity extends ImmersionBaseActivity {
                             }
                         });
     }
-
 
 
     public void naviFragment(Fragment fragment) {
