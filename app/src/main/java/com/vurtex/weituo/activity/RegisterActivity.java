@@ -83,29 +83,31 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
     EditText et_Age;
 
     @Override
-    protected int setLayoutId() {
-        return R.layout.activity_register;
-    }
-    @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
         mImmersionBar.titleBar(mToolbar)
                 .navigationBarColor(R.color.colorBackground)
                 .init();
     }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_register;
+    }
+
     @Override
     protected void initView() {
         populateAutoComplete();
-        et_Password.setOnEditorActionListener((textView, id,  keyEvent)-> {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptRegister();
-                    return true;
-                }
-                return false;
+        et_Password.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                attemptRegister();
+                return true;
+            }
+            return false;
         });
 
-        btn_Submit.setOnClickListener((view)-> {
-                attemptRegister();
+        btn_Submit.setOnClickListener((view) -> {
+            attemptRegister();
         });
     }
 
