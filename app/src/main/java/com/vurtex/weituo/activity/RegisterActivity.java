@@ -88,15 +88,6 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
     }
 
     @Override
-    protected void initImmersionBar() {
-        super.initImmersionBar();
-        mImmersionBar.titleBar(mToolbar)
-                .navigationBarColor(R.color.colorBackground)
-                .init();
-    }
-
-
-    @Override
     protected void initView() {
         populateAutoComplete();
         et_Password.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -110,6 +101,14 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
         btn_Submit.setOnClickListener((view) -> {
             attemptRegister();
         });
+    }
+
+    @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.titleBar(mToolbar)
+                .navigationBarColor(R.color.colorBackground)
+                .init();
     }
 
     private void populateAutoComplete() {
