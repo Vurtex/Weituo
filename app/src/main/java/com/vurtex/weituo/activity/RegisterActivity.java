@@ -81,11 +81,7 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
     Button btn_Submit;
     @BindView(R.id.et_age)
     EditText et_Age;
-    
-    @Override
-    protected int setLayoutId() {
-        return R.layout.activity_register;
-    }
+
 
     @Override
     protected void initView() {
@@ -101,6 +97,11 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
         btn_Submit.setOnClickListener((view) -> {
             attemptRegister();
         });
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_register;
     }
 
     @Override
