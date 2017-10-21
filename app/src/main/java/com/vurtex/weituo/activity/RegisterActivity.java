@@ -84,11 +84,6 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
 
 
     @Override
-    protected int setLayoutId() {
-        return R.layout.activity_register;
-    }
-
-    @Override
     protected void initView() {
         populateAutoComplete();
         et_Password.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -102,6 +97,11 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
         btn_Submit.setOnClickListener((view) -> {
             attemptRegister();
         });
+    }
+
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_register;
     }
 
     @Override
