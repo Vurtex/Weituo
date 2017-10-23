@@ -94,8 +94,6 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
             return false;
         });
 
-
-
         btn_Submit.setOnClickListener((view) -> {
             attemptRegister();
         });
