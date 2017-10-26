@@ -99,6 +99,8 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
         });
     }
 
+
+    
     @Override
     protected int setLayoutId() {
         return R.layout.activity_register;
