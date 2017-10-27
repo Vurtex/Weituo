@@ -98,8 +98,6 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
             attemptRegister();
         });
     }
-
-
     
     @Override
     protected int setLayoutId() {
