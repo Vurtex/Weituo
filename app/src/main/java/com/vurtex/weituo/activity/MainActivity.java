@@ -58,6 +58,7 @@ public class MainActivity extends ImmersionBaseActivity {
         mBottomBar.onSaveInstanceState();
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
