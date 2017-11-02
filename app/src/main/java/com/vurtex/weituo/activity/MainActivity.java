@@ -57,13 +57,14 @@ public class MainActivity extends ImmersionBaseActivity {
         //保存BottomBar的状态
         mBottomBar.onSaveInstanceState();
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
 
     public void initFragments() {
         mFragments = new ArrayList<>();
