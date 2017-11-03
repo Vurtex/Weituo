@@ -64,8 +64,7 @@ public class MainActivity extends ImmersionBaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
-
-
+    
     public void initFragments() {
         mFragments = new ArrayList<>();
         mFragments.add(OneFragment.newInstance(0));
