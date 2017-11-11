@@ -65,7 +65,6 @@ public class MainActivity extends ImmersionBaseActivity {
         ButterKnife.bind(this);
     }
 
-
     public void initFragments() {
         mFragments = new ArrayList<>();
         mFragments.add(OneFragment.newInstance(0));
