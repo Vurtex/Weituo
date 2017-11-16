@@ -141,6 +141,7 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
         return false;
     }
 
+
     /**
      * Callback received when a permissions request has been completed.
      */
