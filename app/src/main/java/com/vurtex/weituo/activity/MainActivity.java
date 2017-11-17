@@ -83,7 +83,6 @@ public class MainActivity extends ImmersionBaseActivity {
                 .init();
     }
 
-
     @Override
     protected void initView() {
         super.initView();
