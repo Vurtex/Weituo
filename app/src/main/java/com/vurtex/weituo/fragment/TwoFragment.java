@@ -43,6 +43,7 @@ public class TwoFragment extends ImmersionBaseFragment implements SwipeRefreshLa
 
     public ArrayList<OneListModel> arr = new ArrayList<>();
 
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
