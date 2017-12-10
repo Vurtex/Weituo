@@ -50,7 +50,6 @@ public class TwoFragment extends ImmersionBaseFragment implements SwipeRefreshLa
     public TwoFragment() {
     }
 
-
     // TODO: Customize parameter initialization
     public static TwoFragment newInstance(int columnCount) {
         TwoFragment fragment = new TwoFragment();
