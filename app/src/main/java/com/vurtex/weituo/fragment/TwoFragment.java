@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-
 public class TwoFragment extends ImmersionBaseFragment implements SwipeRefreshLayout.OnRefreshListener,
         EasyViewHolder.OnItemClickListener {
 
