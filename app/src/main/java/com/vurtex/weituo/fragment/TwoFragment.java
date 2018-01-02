@@ -28,7 +28,6 @@ import butterknife.BindView;
 public class TwoFragment extends ImmersionBaseFragment implements SwipeRefreshLayout.OnRefreshListener,
         EasyViewHolder.OnItemClickListener {
 
-
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     @BindView(R.id.list)
