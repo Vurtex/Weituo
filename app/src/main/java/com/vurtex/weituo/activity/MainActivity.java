@@ -74,7 +74,6 @@ public class MainActivity extends ImmersionBaseActivity {
         mFragments.add(FiveFragment.newInstance(4));
     }
 
-
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
