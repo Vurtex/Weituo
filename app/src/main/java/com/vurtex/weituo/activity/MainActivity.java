@@ -38,7 +38,6 @@ import work.wanghao.simplehud.SimpleHUD;
 
 import static work.wanghao.simplehud.SimpleHUD.showErrorMessage;
 
-
 public class MainActivity extends ImmersionBaseActivity {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
