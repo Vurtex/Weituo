@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -214,7 +215,7 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
             // perform the user login attempt.
             //TODO 请求接口提交注册
             HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService(HttpServiceApi.class);
-            mHttpServiceApi.dologin(username, password).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
+            mHttpServiceApi.doregister(username, password,nickname,age,avatar).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
                     Schedulers.io()).subscribe((loginResult -> {
                 SimpleHUD.dismiss();
                 ResultInfo resultInfo = loginResult.getResultInfo();
