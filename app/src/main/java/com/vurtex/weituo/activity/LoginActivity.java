@@ -60,7 +60,6 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-
     @BindView(R.id.tv_toolbar)
     TextView tv_top_title;
     @BindView(R.id.image)
@@ -272,7 +271,6 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
 
         et_Username.setAdapter(adapter);
     }
-
 
 
     private interface ProfileQuery {

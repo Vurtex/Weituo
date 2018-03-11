@@ -49,6 +49,11 @@ public class MainActivity extends ImmersionBaseActivity {
     Toolbar mToolbar;
     private ArrayList<Fragment> mFragments;
 
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_main;
+    }
+
     //    private PopupMenu mPopupMenu;
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -93,11 +98,6 @@ public class MainActivity extends ImmersionBaseActivity {
         initFragments();
         tabListen();
         updateCheck();
-    }
-
-    @Override
-    protected int setLayoutId() {
-        return R.layout.activity_main;
     }
 
     private void updateCheck() {

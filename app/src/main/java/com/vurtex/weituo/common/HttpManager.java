@@ -5,5 +5,5 @@ package com.vurtex.weituo.common;
  */
 
 public class HttpManager {
-    public static String BASE_URL="http://192.168.0.107:8080";//"http://139.199.128.80/";//
+    public static String BASE_URL="http://192.168.1.106:8080";//"http://139.199.128.80/";//
 }

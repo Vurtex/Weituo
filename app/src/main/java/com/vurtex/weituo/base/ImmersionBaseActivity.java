@@ -20,6 +20,7 @@ public abstract class ImmersionBaseActivity extends AppCompatActivity {
     protected ImmersionBar mImmersionBar;
     private Unbinder unbinder;
     public Context mContext;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

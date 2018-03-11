@@ -105,8 +105,6 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
         return R.layout.activity_register;
     }
 
-
-
     @Override
     protected void initImmersionBar() {
         super.initImmersionBar();
