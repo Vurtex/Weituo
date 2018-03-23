@@ -47,7 +47,6 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends ImmersionBaseActivity implements LoaderCallbacks<Cursor> {
-
     /**
      * Id to identity READ_CONTACTS permission request.
      */
