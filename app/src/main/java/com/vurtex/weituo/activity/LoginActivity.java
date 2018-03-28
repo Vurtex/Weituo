@@ -65,7 +65,6 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
     ImageView img_top_btn;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-
     @BindView(R.id.et_username)
     AutoCompleteTextView et_Username;
     @BindView(R.id.et_password)
