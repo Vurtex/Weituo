@@ -54,7 +54,6 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -212,8 +211,10 @@ public class RegisterActivity extends ImmersionBaseActivity implements LoaderCal
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //TODO 请求接口提交注册
-            HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService(HttpServiceApi.class);
-            mHttpServiceApi.doregister(username, password,nickname,age,avatar).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
+            HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService
+                    (HttpServiceApi.class);
+            mHttpServiceApi.doregister(username, password, nickname, age, avatar).observeOn
+                    (AndroidSchedulers.mainThread()).subscribeOn(
                     Schedulers.io()).subscribe((loginResult -> {
                 SimpleHUD.dismiss();
                 ResultInfo resultInfo = loginResult.getResultInfo();
