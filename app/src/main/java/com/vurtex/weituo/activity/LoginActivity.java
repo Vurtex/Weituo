@@ -51,7 +51,6 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -194,8 +193,10 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
         } else {
             SimpleHUD.showLoadingMessage(LoginActivity.this, "正在登录...", true);
             //TODO 去登录
-            HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService(HttpServiceApi.class);
-            mHttpServiceApi.dologin(username, password).observeOn(AndroidSchedulers.mainThread()).subscribeOn(
+            HttpServiceApi mHttpServiceApi = ApiService.getInstance().createApiService
+                    (HttpServiceApi.class);
+            mHttpServiceApi.dologin(username, password).observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(
                     Schedulers.io()).subscribe((loginResult -> {
                 SimpleHUD.dismiss();
                 ResultInfo resultInfo = loginResult.getResultInfo();
@@ -205,7 +206,8 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(LoginActivity.this, resultInfo.getResultMsg(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, resultInfo.getResultMsg(), Toast
+                            .LENGTH_SHORT).show();
                 }
             }), new ErrorAction() {
                 @Override
