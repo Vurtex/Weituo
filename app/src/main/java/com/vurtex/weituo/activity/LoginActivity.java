@@ -197,7 +197,7 @@ public class LoginActivity extends ImmersionBaseActivity implements LoaderCallba
                     (HttpServiceApi.class);
             mHttpServiceApi.dologin(username, password).observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(
-                    Schedulers.io()).subscribe((loginResult -> {
+                            Schedulers.io()).subscribe((loginResult -> {
                 SimpleHUD.dismiss();
                 ResultInfo resultInfo = loginResult.getResultInfo();
                 if (resultInfo.getResultCode() == 1) {
